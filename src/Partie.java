@@ -8,14 +8,14 @@
  *
  * @author lmarcilh
  */
-import java.util.Random;
+import java.util.Random;//on importe les bibliotheques necessaires
 import java.util.Scanner;
 
 public class Partie {
 
     Joueur ListeJoueurs[] = new Joueur[2];//on crée 2 joueurs
     Grille laGrille = new Grille();//pareil pour la grille de jeu
-    Joueur joueurCourant;
+    Joueur joueurCourant;//le joueur qui joue
     Random rand = new Random();//on créé une valeur aléatoire qui servira a attribuer une couleur aléatoire au joueurs
 
     public void attribuerCouleursAuxJoueurs() {
