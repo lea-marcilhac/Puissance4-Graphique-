@@ -11,6 +11,13 @@
 public class Grille {
 
     Cellule Cellules[][] = new Cellule[6][7];
+    public Grille () {
+        for (int i=0; i<6;i++){
+            for (int j =0; j<7; j++){
+                Cellules[i][j] =new Cellule();
+            }
+        }
+    }
 
     public boolean ajouterJetonDansColonne(Jeton unJeton, int numColonne) {//méthode pour ajouter un jeton dans une colonne
         int i = 0;
