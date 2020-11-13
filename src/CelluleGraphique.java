@@ -8,24 +8,45 @@ import java.awt.Graphics;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author marci
  */
 public class CelluleGraphique extends JButton {
+
     Cellule celluleAssociee;
     ImageIcon img_vide = new javax.swing.ImageIcon(getClass().getResource("/Images/cellulevide.png"));
-    
-    public CelluleGraphique (Cellule uneCellule) {
+   ImageIcon img_desintegrateur = new javax.swing.ImageIcon(getClass().getResource("/Images/desintegrateur.png"));
+    ImageIcon img_JetonJaune = new javax.swing.ImageIcon(getClass().getResource("/Images/JetonJaune.png"));
+    ImageIcon img_JetonRouge = new javax.swing.ImageIcon(getClass().getResource("/Images/JetonRouge.png"));
+    ImageIcon img_trouNoir = new javax.swing.ImageIcon(getClass().getResource("/Images/trouNoir.png"));
+
+    public CelluleGraphique(Cellule uneCellule) {
         celluleAssociee = uneCellule;
-        
+
     }
-    
-   @Override
-    public void paintComponent (Graphics G) {
+
+    @Override
+    public void paintComponent(Graphics G) {
         super.paintComponent(G);
-        
+        if (celluleAssociee.presenceTrouNoir() == true) {
+            setIcon(img_trouNoir);
+         if (celluleAssociee.presenceDesintegrateur() == true) {
+           setIcon(img_desintegrateur);
+        } else {
+            String couleur_jeton = celluleAssociee.lireCouleurDuJeton();
+            switch (couleur_jeton) {
+                case "vide":
+                    setIcon(img_vide);
+                case "R":
+                    setIcon(img_JetonRouge);
+                case "J":
+                    setIcon(img_JetonJaune);
+            }
+       }
+
         setIcon(img_vide);
     }
+    }
 }
+

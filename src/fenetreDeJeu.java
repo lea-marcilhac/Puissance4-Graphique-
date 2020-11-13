@@ -8,7 +8,12 @@
  *
  * @author marci
  */
+    import java.util.Random;//on importe les bibliotheques necessaires
+    import java.util.Scanner;
+    
 public class fenetreDeJeu extends javax.swing.JFrame {
+    
+     Random rand = new Random();
 
     Joueur ListeJoueurs[] = new Joueur[2];//on crée 2 joueurs
     Grille laGrille = new Grille();//pareil pour la grille de jeu
@@ -17,6 +22,7 @@ public class fenetreDeJeu extends javax.swing.JFrame {
      * Creates new form fenetreDeJeu
      */
     public fenetreDeJeu() {
+        
         initComponents();
         panneau_info_jeu.setVisible(false);
         panneau_info_joueurs.setVisible(false);
@@ -27,6 +33,8 @@ public class fenetreDeJeu extends javax.swing.JFrame {
                 panneau_grille.add(cellGraph);
             }
         }
+        //Partie uneNouvellePartie = new Partie();//une fois les noms enregistrés, on lance la partie
+        //uneNouvellePartie.debuterPartie();
     }
 
     /**
@@ -98,7 +106,19 @@ public class fenetreDeJeu extends javax.swing.JFrame {
 
         jLabel2.setText("Nom Joueur 1 :");
         panneau_creation_jeu.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 100, 20));
+
+        nom_joueur_2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nom_joueur_2ActionPerformed(evt);
+            }
+        });
         panneau_creation_jeu.add(nom_joueur_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 40, 110, -1));
+
+        nom_joueur_1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nom_joueur_1ActionPerformed(evt);
+            }
+        });
         panneau_creation_jeu.add(nom_joueur_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, 110, -1));
 
         btn_start.setText("Démarrer partie");
@@ -244,6 +264,74 @@ public class fenetreDeJeu extends javax.swing.JFrame {
 
         setBounds(0, 0, 1048, 712);
     }// </editor-fold>//GEN-END:initComponents
+    
+    public void initialiserPartie() {
+        
+          String nomJoueur1=nom_joueur_1.getText();
+          Joueur Joueur1 = new Joueur (nomJoueur1);
+          
+          String nomJoueur2=nom_joueur_2.getText();
+          Joueur Joueur2 = new Joueur (nomJoueur2);
+   
+        laGrille.viderGrille();//on commence par vider la grille pour supprimer tous les jetons et pieges
+        int d = 0;
+        int x;
+        int y;
+
+        for (int i = 0; i < 5; i++) {//on fait 5 tours de boucle pour poser 5 desintegrateurs
+
+            x = rand.nextInt(6);
+            y = rand.nextInt(7);
+
+            while (!laGrille.placerTrouNoir(x, y)) {//on vérifie que aux coordonnées x,y, il n'y ai pas de trou noir avec le"!" qui signifie
+                x = rand.nextInt(6);//                l'opposé
+                y = rand.nextInt(7);
+            }
+            if (d < 2) {
+                laGrille.placerDesintegrateur(x, y);//pour pouvoir y mettre un désintégrateur
+                d++;
+            }
+
+        }
+
+        for (int i = 0; i < 3; i++) {
+
+            x = rand.nextInt(6);
+            y = rand.nextInt(7);
+
+            while (laGrille.Cellules[x][y].presenceTrouNoir() || !laGrille.placerDesintegrateur(x, y)) {
+                x = rand.nextInt(6);
+                y = rand.nextInt(7);
+            }
+
+        }
+    }
+    
+       public void attribuerCouleursAuxJoueurs() {
+        int r = rand.nextInt(2);//on donne à r une valeur entière aléatoire 0 ou 1
+        if (r == 1) {
+            ListeJoueurs[0] = new Joueur("R");
+            ListeJoueurs[0].affecterCouleur("R");//le premier joueur aura la couleur rouge
+            ListeJoueurs[1] = new Joueur("J");
+            ListeJoueurs[1].affecterCouleur("J");//le deuxieme joueur aura la couleur jaune
+            joueurCourant = ListeJoueurs[0];//le joueur courant, donc le premier a jouer, est le joueur 1
+            for (int i = 0; i < 21; i++) {//ici on donne à chaque joueur ses 21 jetons de la bonne couleur
+                ListeJoueurs[0].ajouterJeton(new Jeton("R"));
+                ListeJoueurs[1].ajouterJeton(new Jeton("J"));
+            }
+
+        } else {// meme chose qu'avant mais en inversant les couleurs
+            ListeJoueurs[0] = new Joueur("J");
+            ListeJoueurs[0].affecterCouleur("J");
+            ListeJoueurs[1] = new Joueur("R");
+            ListeJoueurs[1].affecterCouleur("R");
+            joueurCourant = ListeJoueurs[0];
+            for (int i = 0; i < 21; i++) {
+                ListeJoueurs[0].ajouterJeton(new Jeton("J"));
+                ListeJoueurs[1].ajouterJeton(new Jeton("R"));
+            }
+        }
+    }
 
     private void btn_col_2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_col_2ActionPerformed
         // TODO add your handling code here:
@@ -260,7 +348,17 @@ public class fenetreDeJeu extends javax.swing.JFrame {
     private void btn_startActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_startActionPerformed
         panneau_info_jeu.setVisible(true);
         panneau_info_joueurs.setVisible(true);
+        initialiserPartie();
+        
     }//GEN-LAST:event_btn_startActionPerformed
+
+    private void nom_joueur_1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nom_joueur_1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nom_joueur_1ActionPerformed
+
+    private void nom_joueur_2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nom_joueur_2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nom_joueur_2ActionPerformed
 
     /**
      * @param args the command line arguments

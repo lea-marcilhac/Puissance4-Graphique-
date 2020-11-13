@@ -24,6 +24,7 @@ public class Partie {
             ListeJoueurs[0] = new Joueur("R");
             ListeJoueurs[0].affecterCouleur("R");//le premier joueur aura la couleur rouge
             ListeJoueurs[1] = new Joueur("J");
+            
             ListeJoueurs[1].affecterCouleur("J");//le deuxieme joueur aura la couleur jaune
             joueurCourant = ListeJoueurs[0];//le joueur courant, donc le premier a jouer, est le joueur 1
             for (int i = 0; i < 21; i++) {//ici on donne à chaque joueur ses 21 jetons de la bonne couleur
@@ -42,9 +43,25 @@ public class Partie {
                 ListeJoueurs[1].ajouterJeton(new Jeton("R"));
             }
         }
+       
     }
 
     public void initialiserPartie() {
+        
+       System.out.println("Quel est le nom de joueurs 1 : ");//on demande au début du jeu le nom des joueurs
+        Scanner sc;
+        sc = new Scanner(System.in);
+        Joueur Joueur1 = new Joueur(sc.nextLine());
+        Joueur1=ListeJoueurs[0];
+        
+
+        System.out.println("Quel est le nom de joueurs 2 : ");
+        
+   
+      Joueur Joueur2= new Joueur(sc.nextLine());
+        Joueur2=ListeJoueurs[1];
+        
+       
 
         laGrille.viderGrille();//on commence par vider la grille pour supprimer tous les jetons et pieges
         int d = 0;
