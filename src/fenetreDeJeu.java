@@ -41,13 +41,13 @@ public class fenetreDeJeu extends javax.swing.JFrame {
                         }
 
                         if (c.jetonCourant.Couleur.equals(joueurCourant.Couleur)) {
-                            message.setText("le joueur " + joueurCourant.Nom + " récupere un de ses jetons");
+                            message.setText("Le joueur " + joueurCourant.Nom + " récupere un de ses jetons");
                             Jeton jrecup = c.recuperJeton();
                             joueurCourant.ajouterJeton(jrecup);
                             joueurSuivant();
                         } else {
                             if (joueurCourant.nombreDesintegrateurs > 0) {
-                                message.setText("le joueur " + joueurCourant.Nom + " desintegrer un jeton");
+                                message.setText("Le joueur " + joueurCourant.Nom + " desintegre un jeton");
                                 c.supprimerJeton();
                                 joueurCourant.utiliserDesintegrateur();
                                 joueurSuivant();
@@ -133,8 +133,7 @@ public class fenetreDeJeu extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         lbl_jcourant = new javax.swing.JLabel();
-        textemessage = new javax.swing.JScrollPane();
-        message = new javax.swing.JTextArea();
+        message = new java.awt.TextArea();
         btn_col_6 = new javax.swing.JButton();
         btn_col_0 = new javax.swing.JButton();
         btn_col_1 = new javax.swing.JButton();
@@ -269,12 +268,7 @@ public class fenetreDeJeu extends javax.swing.JFrame {
 
         lbl_jcourant.setText("nomJoueur   ");
         panneau_info_jeu.add(lbl_jcourant, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 50, -1, -1));
-
-        message.setColumns(20);
-        message.setRows(5);
-        textemessage.setViewportView(message);
-
-        panneau_info_jeu.add(textemessage, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 280, 60));
+        panneau_info_jeu.add(message, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 260, 60));
 
         getContentPane().add(panneau_info_jeu, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 440, 290, 150));
 
@@ -352,7 +346,7 @@ public class fenetreDeJeu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public void initialiserPartie() {
-         laGrille.viderGrille();//on commence par vider la grille pour supprimer tous les jetons et pieges
+        laGrille.viderGrille();//on commence par vider la grille pour supprimer tous les jetons et pieges
 
         String nomJoueur1 = nom_joueur_1.getText();
         Joueur Joueur1 = new Joueur(nomJoueur1);
@@ -639,7 +633,7 @@ public class fenetreDeJeu extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_j2_desint;
     private javax.swing.JLabel lbl_j2_nom;
     private javax.swing.JLabel lbl_jcourant;
-    private javax.swing.JTextArea message;
+    private java.awt.TextArea message;
     private javax.swing.JTextField nom_joueur_1;
     private javax.swing.JTextField nom_joueur_2;
     private javax.swing.JPanel panneau_creation_jeu;
@@ -647,6 +641,5 @@ public class fenetreDeJeu extends javax.swing.JFrame {
     private javax.swing.JPanel panneau_info_jeu;
     private javax.swing.JPanel panneau_info_joueurs;
     private javax.swing.JPanel panneau_info_partie1;
-    private javax.swing.JScrollPane textemessage;
     // End of variables declaration//GEN-END:variables
 }

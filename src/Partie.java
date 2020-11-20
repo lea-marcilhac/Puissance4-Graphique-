@@ -21,26 +21,26 @@ public class Partie {
     public void attribuerCouleursAuxJoueurs() {
         int r = rand.nextInt(2);//on donne à r une valeur entière aléatoire 0 ou 1
         if (r == 1) {
-            ListeJoueurs[0] = new Joueur("R");
-            ListeJoueurs[0].affecterCouleur("R");//le premier joueur aura la couleur rouge
-            ListeJoueurs[1] = new Joueur("J");
+            ListeJoueurs[0] = new Joueur("Rouge");
+            ListeJoueurs[0].affecterCouleur("Rouge");//le premier joueur aura la couleur rouge
+            ListeJoueurs[1] = new Joueur("Jaune");
             
             ListeJoueurs[1].affecterCouleur("J");//le deuxieme joueur aura la couleur jaune
             joueurCourant = ListeJoueurs[0];//le joueur courant, donc le premier a jouer, est le joueur 1
             for (int i = 0; i < 21; i++) {//ici on donne à chaque joueur ses 21 jetons de la bonne couleur
-                ListeJoueurs[0].ajouterJeton(new Jeton("R"));
-                ListeJoueurs[1].ajouterJeton(new Jeton("J"));
+                ListeJoueurs[0].ajouterJeton(new Jeton("Rouge"));
+                ListeJoueurs[1].ajouterJeton(new Jeton("Jaune"));
             }
 
         } else {// meme chose qu'avant mais en inversant les couleurs
-            ListeJoueurs[0] = new Joueur("J");
-            ListeJoueurs[0].affecterCouleur("J");
-            ListeJoueurs[1] = new Joueur("R");
-            ListeJoueurs[1].affecterCouleur("R");
+            ListeJoueurs[0] = new Joueur("Jaune");
+            ListeJoueurs[0].affecterCouleur("Jaune");
+            ListeJoueurs[1] = new Joueur("Rouge");
+            ListeJoueurs[1].affecterCouleur("Rouge");
             joueurCourant = ListeJoueurs[0];
             for (int i = 0; i < 21; i++) {
-                ListeJoueurs[0].ajouterJeton(new Jeton("J"));
-                ListeJoueurs[1].ajouterJeton(new Jeton("R"));
+                ListeJoueurs[0].ajouterJeton(new Jeton("Jaune"));
+                ListeJoueurs[1].ajouterJeton(new Jeton("Rouge"));
             }
         }
        
