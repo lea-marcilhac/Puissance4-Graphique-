@@ -143,7 +143,7 @@ public class Partie {
                     ligne = sc.nextInt();
                     Jeton leJeton = laGrille.recupererJeton(ligne, colonne);//on récupere le jeton
                     joueurCourant.ajouterJeton(leJeton);//on le rend au joueur
-                    laGrille.tasserGrille(colonne);//on fait descendre les jetons qui étaient au dessus
+                    
                  
                     break;
 

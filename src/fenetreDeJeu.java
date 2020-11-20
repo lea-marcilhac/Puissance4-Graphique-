@@ -31,6 +31,57 @@ public class fenetreDeJeu extends javax.swing.JFrame {
         for (int i = 0; i <= 5; i++) {
             for (int j = 0; j < 7; j++) {
                 CelluleGraphique cellGraph = new CelluleGraphique(laGrille.Cellules[i][j]);
+
+                cellGraph.addActionListener(new java.awt.event.ActionListener() {
+
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        Cellule c = cellGraph.celluleAssociee;
+                        if (c.jetonCourant == null) {
+                            return;
+                        }
+
+                        if (c.jetonCourant.Couleur.equals(joueurCourant.Couleur)) {
+                            message.setText("le joueur " + joueurCourant.Nom + " récupere un de ses jetons");
+                            Jeton jrecup = c.recuperJeton();
+                            joueurCourant.ajouterJeton(jrecup);
+                            joueurSuivant();
+                        } else {
+                            if (joueurCourant.nombreDesintegrateurs > 0) {
+                                message.setText("le joueur " + joueurCourant.Nom + " desintegrer un jeton");
+                                c.supprimerJeton();
+                                joueurCourant.utiliserDesintegrateur();
+                                joueurSuivant();
+
+                            } else {
+                                return;
+                            }
+                        }
+                        laGrille.tasserGrille();
+                        panneau_grille.repaint();
+                        lbl_j1_desint.setText(ListeJoueurs[0].nombreDesintegrateurs + "");
+                        lbl_j2_desint.setText(ListeJoueurs[1].nombreDesintegrateurs + "");
+
+                        boolean vict_Joueur1 = laGrille.etreGagnantPourJoueur(ListeJoueurs[0]);
+                        boolean vict_Joueur2 = laGrille.etreGagnantPourJoueur(ListeJoueurs[1]);
+
+                        if (vict_Joueur1 && !vict_Joueur2) {
+                            message.setText("Victoire de " + ListeJoueurs[0].Nom);
+                        }
+                        if (vict_Joueur2 && !vict_Joueur1) {
+                            message.setText("Victoire de " + ListeJoueurs[1].Nom);
+                        }
+
+                        if (vict_Joueur1 && !vict_Joueur2) {
+                            if (joueurCourant == ListeJoueurs[0]) {
+                                message.setText("Victoire de " + ListeJoueurs[0].Nom);
+                            } else {
+                                message.setText("Victoire de" + ListeJoueurs[1].Nom + "faute de jeu de l'autre joueur");
+                            }
+                        }
+
+                    }
+                });
+
                 panneau_grille.add(cellGraph);
             }
         }
@@ -99,7 +150,7 @@ public class fenetreDeJeu extends javax.swing.JFrame {
         panneau_grille.setLayout(new java.awt.GridLayout(6, 7));
         getContentPane().add(panneau_grille, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 670, 560));
 
-        panneau_creation_jeu.setBackground(new java.awt.Color(153, 255, 204));
+        panneau_creation_jeu.setBackground(new java.awt.Color(255, 51, 51));
         panneau_creation_jeu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("Nom Joueur 2 :");
@@ -132,7 +183,7 @@ public class fenetreDeJeu extends javax.swing.JFrame {
 
         getContentPane().add(panneau_creation_jeu, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 40, 290, 110));
 
-        panneau_info_joueurs.setBackground(new java.awt.Color(153, 255, 204));
+        panneau_info_joueurs.setBackground(new java.awt.Color(0, 0, 255));
         panneau_info_joueurs.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setFont(new java.awt.Font("Lucida Bright", 1, 18)); // NOI18N
@@ -206,7 +257,7 @@ public class fenetreDeJeu extends javax.swing.JFrame {
 
         getContentPane().add(panneau_info_joueurs, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 170, 290, 250));
 
-        panneau_info_jeu.setBackground(new java.awt.Color(153, 255, 204));
+        panneau_info_jeu.setBackground(new java.awt.Color(255, 0, 0));
         panneau_info_jeu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel5.setFont(new java.awt.Font("Lucida Bright", 1, 18)); // NOI18N
@@ -223,10 +274,12 @@ public class fenetreDeJeu extends javax.swing.JFrame {
         message.setRows(5);
         textemessage.setViewportView(message);
 
-        panneau_info_jeu.add(textemessage, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 280, 60));
+        panneau_info_jeu.add(textemessage, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 280, 60));
 
         getContentPane().add(panneau_info_jeu, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 440, 290, 150));
 
+        btn_col_6.setBackground(new java.awt.Color(0, 0, 0));
+        btn_col_6.setForeground(new java.awt.Color(255, 255, 255));
         btn_col_6.setText("7");
         btn_col_6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -235,6 +288,8 @@ public class fenetreDeJeu extends javax.swing.JFrame {
         });
         getContentPane().add(btn_col_6, new org.netbeans.lib.awtextra.AbsoluteConstraints(626, 60, -1, -1));
 
+        btn_col_0.setBackground(new java.awt.Color(0, 0, 0));
+        btn_col_0.setForeground(new java.awt.Color(255, 255, 255));
         btn_col_0.setText("1");
         btn_col_0.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -243,6 +298,8 @@ public class fenetreDeJeu extends javax.swing.JFrame {
         });
         getContentPane().add(btn_col_0, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, -1, -1));
 
+        btn_col_1.setBackground(new java.awt.Color(0, 0, 0));
+        btn_col_1.setForeground(new java.awt.Color(255, 255, 255));
         btn_col_1.setText("2");
         btn_col_1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -251,6 +308,8 @@ public class fenetreDeJeu extends javax.swing.JFrame {
         });
         getContentPane().add(btn_col_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(146, 60, -1, -1));
 
+        btn_col_2.setBackground(new java.awt.Color(0, 0, 0));
+        btn_col_2.setForeground(new java.awt.Color(255, 255, 255));
         btn_col_2.setText("3");
         btn_col_2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -259,6 +318,8 @@ public class fenetreDeJeu extends javax.swing.JFrame {
         });
         getContentPane().add(btn_col_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(242, 60, -1, -1));
 
+        btn_col_3.setBackground(new java.awt.Color(0, 0, 0));
+        btn_col_3.setForeground(new java.awt.Color(255, 255, 255));
         btn_col_3.setText("4");
         btn_col_3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -267,6 +328,8 @@ public class fenetreDeJeu extends javax.swing.JFrame {
         });
         getContentPane().add(btn_col_3, new org.netbeans.lib.awtextra.AbsoluteConstraints(338, 60, -1, -1));
 
+        btn_col_4.setBackground(new java.awt.Color(0, 0, 0));
+        btn_col_4.setForeground(new java.awt.Color(255, 255, 255));
         btn_col_4.setText("5");
         btn_col_4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -275,6 +338,8 @@ public class fenetreDeJeu extends javax.swing.JFrame {
         });
         getContentPane().add(btn_col_4, new org.netbeans.lib.awtextra.AbsoluteConstraints(434, 60, -1, -1));
 
+        btn_col_5.setBackground(new java.awt.Color(0, 0, 0));
+        btn_col_5.setForeground(new java.awt.Color(255, 255, 255));
         btn_col_5.setText("6");
         btn_col_5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -287,7 +352,7 @@ public class fenetreDeJeu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public void initialiserPartie() {
-        //  laGrille.viderGrille();//on commence par vider la grille pour supprimer tous les jetons et pieges
+         laGrille.viderGrille();//on commence par vider la grille pour supprimer tous les jetons et pieges
 
         String nomJoueur1 = nom_joueur_1.getText();
         Joueur Joueur1 = new Joueur(nomJoueur1);
@@ -348,24 +413,24 @@ public class fenetreDeJeu extends javax.swing.JFrame {
         int r = rand.nextInt(2);//on donne à r une valeur entière aléatoire 0 ou 1
         if (r == 1) {
 
-            ListeJoueurs[0].affecterCouleur("R");//le premier joueur aura la couleur rouge
+            ListeJoueurs[0].affecterCouleur("Rouge");//le premier joueur aura la couleur rouge
 
-            ListeJoueurs[1].affecterCouleur("J");//le deuxieme joueur aura la couleur jaune
+            ListeJoueurs[1].affecterCouleur("Jaune");//le deuxieme joueur aura la couleur jaune
             joueurCourant = ListeJoueurs[0];//le joueur courant, donc le premier a jouer, est le joueur 1
             for (int i = 0; i < 21; i++) {//ici on donne à chaque joueur ses 21 jetons de la bonne couleur
-                ListeJoueurs[0].ajouterJeton(new Jeton("R"));
-                ListeJoueurs[1].ajouterJeton(new Jeton("J"));
+                ListeJoueurs[0].ajouterJeton(new Jeton("Rouge"));
+                ListeJoueurs[1].ajouterJeton(new Jeton("Jaune"));
             }
 
         } else {// meme chose qu'avant mais en inversant les couleurs
-           
-            ListeJoueurs[0].affecterCouleur("J");
-            
-            ListeJoueurs[1].affecterCouleur("R");
+
+            ListeJoueurs[0].affecterCouleur("Jaune");
+
+            ListeJoueurs[1].affecterCouleur("Rouge");
             joueurCourant = ListeJoueurs[0];
             for (int i = 0; i < 21; i++) {
-                ListeJoueurs[0].ajouterJeton(new Jeton("J"));
-                ListeJoueurs[1].ajouterJeton(new Jeton("R"));
+                ListeJoueurs[0].ajouterJeton(new Jeton("Jaune"));
+                ListeJoueurs[1].ajouterJeton(new Jeton("Rouge"));
             }
         }
     }
@@ -403,7 +468,7 @@ public class fenetreDeJeu extends javax.swing.JFrame {
         panneau_info_joueurs.setVisible(true);
         initialiserPartie();
         panneau_grille.repaint();
-        btn_start.setEnabled(false);
+        btn_start.setEnabled(true);
 
 
     }//GEN-LAST:event_btn_startActionPerformed
@@ -456,28 +521,32 @@ public class fenetreDeJeu extends javax.swing.JFrame {
     public boolean jouerDansColonne(int indice_colonne) {
 
         boolean resultatAction;
-    
+
         resultatAction = laGrille.ajouterJetonDansColonne(joueurCourant, indice_colonne);
         panneau_grille.repaint();
 
-     
-           // joueurCourant.nombreDesintegrateurs++;
-        
-        
-        lbl_j1_desint.setText(ListeJoueurs[0].nombreDesintegrateurs+ "");
-        lbl_j2_desint.setText(ListeJoueurs[1].nombreDesintegrateurs+ "");
-        
+        // joueurCourant.nombreDesintegrateurs++;
+        lbl_j1_desint.setText(ListeJoueurs[0].nombreDesintegrateurs + "");
+        lbl_j2_desint.setText(ListeJoueurs[1].nombreDesintegrateurs + "");
+
         boolean vict_Joueur1 = laGrille.etreGagnantPourJoueur(ListeJoueurs[0]);
         boolean vict_Joueur2 = laGrille.etreGagnantPourJoueur(ListeJoueurs[1]);
-                
-                if (vict_Joueur1 && ! vict_Joueur2)  message.setText("Victoire de " + ListeJoueurs[0].Nom);
-                if (vict_Joueur2 && ! vict_Joueur1) message.setText("Victoire de " + ListeJoueurs[1].Nom);
-                
-                if (vict_Joueur1 && ! vict_Joueur2) {
-                    if (joueurCourant == ListeJoueurs[0]) message.setText("Victoire de " + ListeJoueurs[0].Nom);
-                    else message.setText("Victoire de" + ListeJoueurs[1].Nom +  "faute de jeu de l'autre joueur");
-                }
-                
+
+        if (vict_Joueur1 && !vict_Joueur2) {
+            message.setText("Victoire de " + ListeJoueurs[0].Nom);
+        }
+        if (vict_Joueur2 && !vict_Joueur1) {
+            message.setText("Victoire de " + ListeJoueurs[1].Nom);
+        }
+
+        if (vict_Joueur1 && !vict_Joueur2) {
+            if (joueurCourant == ListeJoueurs[0]) {
+                message.setText("Victoire de " + ListeJoueurs[0].Nom);
+            } else {
+                message.setText("Victoire de" + ListeJoueurs[1].Nom + "faute de jeu de l'autre joueur");
+            }
+        }
+
         if (resultatAction == true) {
             return true;
         } else {
@@ -512,13 +581,17 @@ public class fenetreDeJeu extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(fenetreDeJeu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(fenetreDeJeu.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(fenetreDeJeu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(fenetreDeJeu.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(fenetreDeJeu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(fenetreDeJeu.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(fenetreDeJeu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(fenetreDeJeu.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 

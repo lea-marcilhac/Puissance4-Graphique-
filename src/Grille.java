@@ -21,7 +21,7 @@ public class Grille {
 
     public boolean ajouterJetonDansColonne(Joueur unJoueur, int numColonne) {//méthode pour ajouter un jeton dans une colonne
          Jeton unJeton = unJoueur.ListeJetons[unJoueur.nombreJetonsrestantts - 1];
-        unJoueur.nombreJetonsrestantts--;
+  
         
         int i = 0;
         while (i < 6 && Cellules[i][numColonne].jetonCourant == null) {//on vérifie 
@@ -32,7 +32,8 @@ public class Grille {
             return false;
         }
         
-       
+       unJoueur.nombreJetonsrestantts--;
+       unJoueur.supprimerJeton();
          Cellules[i - 1][numColonne].affecterJeton(unJeton);
         
             if (Cellules[i - 1][numColonne].presenceTrouNoir()) {
@@ -64,7 +65,10 @@ public class Grille {
     public void viderGrille() {
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 7; j++) {
-                Cellules[i][j] = new Cellule();
+                Cellules[i][j].jetonCourant = null;
+                Cellules[i][j].trouNoir = false;
+                Cellules[i][j].desintegrateur = false;
+                
             }
         }
     }
@@ -189,32 +193,29 @@ public class Grille {
         return false;
     }
 
-
-
-    
-
-    public void tasserGrille(int uneColonne) {
-        int i = 5;//on se place en haut d'une colonne
-
-        while (i > 0 && celluleOccupee(i, uneColonne)) {//et on descend progressivement
-            i--;
-
-        }
-
-        if (i != 0) {
-            Jeton unJeton;
-            for (int j = i; j > 0; j--) {
-                unJeton = Cellules[j - 1][uneColonne].recuperJeton();
-                if (unJeton == null) {
-                    Cellules[j][uneColonne].supprimerJeton();
-                    Cellules[j][uneColonne].affecterJeton(null);
-                } else {
-                   Cellules[j][uneColonne].affecterJeton(unJeton);
-                }
-            }
-            Cellules[0][uneColonne].affecterJeton(null);
+    void tasserGrille() {
+        for (int i = 0; i < 7; i++) {
+           tasserColonne(i);
         }
     }
+    
+    
+       void tasserColonne(int colonne) {
+        for (int i = 5; i >= 0; i--) {
+            if (i == 0) {
+                Cellules[i][colonne].jetonCourant = null;
+            } else {
+                if (Cellules[i][colonne].jetonCourant  == null) {
+                  Cellules[i][colonne].jetonCourant = Cellules[i - 1][colonne].jetonCourant;
+                  Cellules[i - 1][colonne].jetonCourant=null;
+                }
+            }
+
+        }
+    }
+    
+
+    
 
     public boolean colonneRemplie(int uneColonne) {//on se place dans une colonne
         for (int i = 0; i < 6; i++) {

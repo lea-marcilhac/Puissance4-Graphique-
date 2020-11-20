@@ -53,7 +53,7 @@ public class Joueur {
      while (ListeJetons[i]==null){
          i++;
      }
-     nombreJetonsrestantts--;
+    
       ListeJetons[i]=null;
     }
     
