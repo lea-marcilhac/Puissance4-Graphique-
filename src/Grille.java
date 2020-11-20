@@ -19,7 +19,10 @@ public class Grille {
         }
     }
 
-    public boolean ajouterJetonDansColonne(Jeton unJeton, int numColonne) {//méthode pour ajouter un jeton dans une colonne
+    public boolean ajouterJetonDansColonne(Joueur unJoueur, int numColonne) {//méthode pour ajouter un jeton dans une colonne
+         Jeton unJeton = unJoueur.ListeJetons[unJoueur.nombreJetonsrestantts - 1];
+        unJoueur.nombreJetonsrestantts--;
+        
         int i = 0;
         while (i < 6 && Cellules[i][numColonne].jetonCourant == null) {//on vérifie 
             i++;
@@ -38,6 +41,7 @@ public class Grille {
 
                if (Cellules[i-1][numColonne].presenceDesintegrateur()) {
             Cellules[i-1][numColonne].recupererDesintegrateur();
+            unJoueur.nombreDesintegrateurs++;
             
            
         }

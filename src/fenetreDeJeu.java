@@ -456,9 +456,8 @@ public class fenetreDeJeu extends javax.swing.JFrame {
     public boolean jouerDansColonne(int indice_colonne) {
 
         boolean resultatAction;
-        Jeton unJeton = joueurCourant.ListeJetons[joueurCourant.nombreJetonsrestantts - 1];
-        joueurCourant.nombreJetonsrestantts--;
-        resultatAction = laGrille.ajouterJetonDansColonne(unJeton, indice_colonne);
+    
+        resultatAction = laGrille.ajouterJetonDansColonne(joueurCourant, indice_colonne);
         panneau_grille.repaint();
 
      
