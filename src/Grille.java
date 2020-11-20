@@ -11,7 +11,7 @@
 public class Grille {
 
     Cellule Cellules[][] = new Cellule[6][7];
-    public Grille () {
+     public Grille () {
         for (int i=0; i<6;i++){
             for (int j =0; j<7; j++){
                 Cellules[i][j] =new Cellule();
@@ -21,26 +21,35 @@ public class Grille {
 
     public boolean ajouterJetonDansColonne(Jeton unJeton, int numColonne) {//méthode pour ajouter un jeton dans une colonne
         int i = 0;
-        while (i < 6 && Cellules[i][numColonne].recuperJeton() == null) {//on vérifie 
+        while (i < 6 && Cellules[i][numColonne].jetonCourant == null) {//on vérifie 
             i++;
 
         }
-        if (Cellules[i - 1][numColonne].recuperJeton() == null) {
-            if (Cellules[i - 1][numColonne].activerTrouNoir()) {
+        if (i==0){
+            return false;
+        }
+        
+       
+         Cellules[i - 1][numColonne].affecterJeton(unJeton);
+        
+            if (Cellules[i - 1][numColonne].presenceTrouNoir()) {
                 Cellules[i - 1][numColonne].activerTrouNoir();
-            } else {
+            } 
 
-                Cellules[i - 1][numColonne].affecterJeton(unJeton);
-            }
+               if (Cellules[i-1][numColonne].presenceDesintegrateur()) {
+            Cellules[i-1][numColonne].recupererDesintegrateur();
+            
+           
+        }
+            
             return true;
         }
-        return false; //pas rentrer dans le for = colonne pleine
-    }
+        
 
     public boolean etreRemplie() {
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 7; j++) {
-                if (Cellules[i][j].recuperJeton() == null) {
+                if (Cellules[i][j].jetonCourant == null) {
                     return false;
                 }
             }
@@ -76,7 +85,7 @@ public class Grille {
     }
 
     public boolean celluleOccupee(int numLigne, int numColonne) {
-        if (Cellules[numLigne][numColonne].recuperJeton() == null) {
+        if (Cellules[numLigne][numColonne].jetonCourant == null) {
             return false;
         }
         return true;
@@ -214,14 +223,16 @@ public class Grille {
     }
 
     public boolean placerTrouNoir(int numLigne, int numColonne) {
-        if (Cellules[numLigne][numColonne].placerTrouNoir()) {
+        if (!Cellules[numLigne][numColonne].trouNoir) {
+            Cellules[numLigne][numColonne].trouNoir = true;
             return true;
         }
         return false;
     }
 
     public boolean placerDesintegrateur(int numLigne, int numColonne) {
-        if (Cellules[numLigne][numColonne].placerDesintegrateur()) {
+        if (!Cellules[numLigne][numColonne].desintegrateur) {
+            Cellules[numLigne][numColonne].desintegrateur = true;
             return true;
         }
         return false;

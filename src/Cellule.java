@@ -29,6 +29,8 @@ public class Cellule {//on initialise la classe
    }
    
    public Jeton recuperJeton(){
+       Jeton jetonRetour = jetonCourant;
+        jetonCourant  = null;
        return jetonCourant;
    }
     //public Jeton recupererJeton(Jeton unJeton){
@@ -43,20 +45,21 @@ public class Cellule {//on initialise la classe
         
     }  
         
-        public boolean placerTrouNoir(){
-            if (!trouNoir){    // si trounoir false
-                trouNoir=true;
-                return true;
-            }
-                return false;
+ Boolean placerTrouNoir(){
+        if(trouNoir){
+            return false;
         }
-   public boolean placerDesintegrateur(){
-            if (!desintegrateur){    // si desintegrateur false
-                desintegrateur=true;
-                return true;
-            }
-                return false;
-   }
+        trouNoir = true;
+        return true;
+ }
+        
+  Boolean placerDesintegrateur(){
+        if(desintegrateur){
+            return false;
+        }
+        desintegrateur = true;
+        return true;
+    }
    
    //liste de méthode pour récuperer des informations sur les trous noirs, les désintegrateur et la couleur du jeton courant
    public boolean presenceTrouNoir(){
