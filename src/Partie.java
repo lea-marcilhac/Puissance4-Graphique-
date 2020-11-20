@@ -119,7 +119,7 @@ public class Partie {
                     sc = new Scanner(System.in);
                     System.out.println("chosir colonne");//on choisi la colonne pour jouer
                     colonne = sc.nextInt();
-                    laGrille.ajouterJetonDansColonne(new Jeton(joueurCourant.lireCouleur()), colonne);//le jeton est ajouté dans la colonne chpoisie
+                    laGrille.ajouterJetonDansColonne(new Joueur(joueurCourant.lireCouleur()), colonne);//le jeton est ajouté dans la colonne chpoisie
                     joueurCourant.supprimerJeton();//on enleve un jeton au joueur
                     joueurCourant.obtenirDesintegrateur();
                     break;

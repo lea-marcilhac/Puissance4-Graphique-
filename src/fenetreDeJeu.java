@@ -474,8 +474,8 @@ public class fenetreDeJeu extends javax.swing.JFrame {
                 if (vict_Joueur2 && ! vict_Joueur1) message.setText("Victoire de " + ListeJoueurs[1].Nom);
                 
                 if (vict_Joueur1 && ! vict_Joueur2) {
-                    if (joueurCourant == ListeJoueurs[0]) message.setText("Victoire de" + ListeJoueurs[1].Nom);
-                    else message.setText("Victoire de" + ListeJoueurs[0].Nom +  "faute de jeu de l'autre joueur");
+                    if (joueurCourant == ListeJoueurs[0]) message.setText("Victoire de " + ListeJoueurs[0].Nom);
+                    else message.setText("Victoire de" + ListeJoueurs[1].Nom +  "faute de jeu de l'autre joueur");
                 }
                 
         if (resultatAction == true) {
