@@ -73,9 +73,9 @@ public class fenetreDeJeu extends javax.swing.JFrame {
 
                         if (vict_Joueur1 && !vict_Joueur2) {
                             if (joueurCourant == ListeJoueurs[0]) {
-                                message.setText("Victoire de " + ListeJoueurs[0].Nom);
+                                message.setText("Victoire de " + ListeJoueurs[0].Nom + " faute de jeu de l'autre joueur");
                             } else {
-                                message.setText("Victoire de" + ListeJoueurs[1].Nom + "faute de jeu de l'autre joueur");
+                                message.setText("Victoire de " + ListeJoueurs[1].Nom + " faute de jeu de l'autre joueur");
                             }
                         }
 
@@ -462,6 +462,7 @@ public class fenetreDeJeu extends javax.swing.JFrame {
         panneau_info_joueurs.setVisible(true);
         initialiserPartie();
         panneau_grille.repaint();
+     
         btn_start.setEnabled(true);
 
 
@@ -527,17 +528,17 @@ public class fenetreDeJeu extends javax.swing.JFrame {
         boolean vict_Joueur2 = laGrille.etreGagnantPourJoueur(ListeJoueurs[1]);
 
         if (vict_Joueur1 && !vict_Joueur2) {
-            message.setText("Victoire de " + ListeJoueurs[0].Nom);
+            message.setText("Victoire de " + ListeJoueurs[0].Nom + " et defaite de " + ListeJoueurs[1].Nom);
         }
         if (vict_Joueur2 && !vict_Joueur1) {
-            message.setText("Victoire de " + ListeJoueurs[1].Nom);
+            message.setText("Victoire de " + ListeJoueurs[1].Nom + " et defaite de " + ListeJoueurs[0].Nom);
         }
 
-        if (vict_Joueur1 && !vict_Joueur2) {
+        if (vict_Joueur1 && vict_Joueur2) {
             if (joueurCourant == ListeJoueurs[0]) {
-                message.setText("Victoire de " + ListeJoueurs[0].Nom);
+                message.setText("Victoire de " + ListeJoueurs[1].Nom + " faute de jeu de l'autre joueur");
             } else {
-                message.setText("Victoire de" + ListeJoueurs[1].Nom + "faute de jeu de l'autre joueur");
+                message.setText("Victoire de " + ListeJoueurs[0].Nom + " faute de jeu de l'autre joueur");
             }
         }
 
